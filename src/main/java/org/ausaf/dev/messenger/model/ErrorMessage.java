@@ -1,5 +1,8 @@
 package org.ausaf.dev.messenger.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class ErrorMessage {
 	
 	private String errorMessage;
@@ -40,6 +43,4 @@ public class ErrorMessage {
 		this.documentation = documentation;
 	}
 	
-	
-
 }
