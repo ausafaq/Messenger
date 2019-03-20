@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response.Status;
+
 import org.ausaf.dev.messenger.database.DatabaseClass;
 import org.ausaf.dev.messenger.model.Comment;
 import org.ausaf.dev.messenger.model.Message;
@@ -18,8 +21,16 @@ public class CommentService {
 	}
 	
 	public Comment getComment(long messageId, long commentId) {
+		Message message = messages.get(messageId);
+		if(message == null) {
+			throw new WebApplicationException(Status.NOT_FOUND);
+		}
 		Map<Long, Comment> comments =  messages.get(messageId).getComments();
-		return comments.get(commentId);
+		Comment comment =  comments.get(commentId);
+		if(comment == null) {
+			throw new WebApplicationException(Status.NOT_FOUND);
+		}
+		return comment;
 	}
 	
 	public Comment addComment(long messageId, Comment comment) {
